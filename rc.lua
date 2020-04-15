@@ -1,5 +1,5 @@
-require('module.notify')
-require('module.error-handler')
+require("module.notify")
+require("module.error-handler")
 
 local beautiful = require("beautiful")
 beautiful.init("~/.config/awesome/themes/my/theme.lua")
