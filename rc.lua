@@ -211,6 +211,8 @@ globalkeys = gears.table.join(
                  awful.key(
                    {modkey}, "l", function() awful.spawn("i3lock-fancy") end,
                      {description = "lock screen", group = "awesome"}), awful.key(
+                   {"Control"}, "space", function() awful.spawn("ibus emoji") end,
+                     {description = "Emoji", group = "awesome"}), awful.key(
                    {modkey}, "l", function() awful.tag.incmwfact(0.05) end,
                      {description = "increase master width factor", group = "layout"}), awful.key(
                    {modkey}, "h", function() awful.tag.incmwfact(-0.05) end,
