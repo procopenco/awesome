@@ -17,4 +17,15 @@ naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.border_width = 1
 naughty.config.defaults.hover_timeout = nil
 
-function log(message) naughty.notify({text = message}) end
+log = {}
+
+function log.info(message, title)
+  title = title or "Info"
+
+  naughty.notify({title = title, text = message})
+end
+
+function log.error(message, title)
+  title = title or "Critical error"
+  naughty.notify({preset = naughty.config.presets.critical, title = title, text = message})
+end
