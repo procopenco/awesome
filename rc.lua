@@ -20,13 +20,6 @@ editor_cmd = terminal .. " -e " .. editor
 
 modkey = "Mod4"
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
 local tasklist_buttons = gears.table.join(
                            awful.button(
                              {}, 1, function(c)
@@ -82,9 +75,9 @@ awful.screen.connect_for_each_screen(
       s.mytasklist, -- Middle widget
       { -- Right widgets
         layout = wibox.layout.fixed.horizontal,
-        mykeyboardlayout,
+        awful.widget.keyboardlayout(),
         wibox.widget.systray(),
-        mytextclock
+        wibox.widget.textclock()
       }
     }
   end)
@@ -93,13 +86,13 @@ awful.screen.connect_for_each_screen(
 globalkeys = gears.table.join(
                awful.key({modkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
                  awful.key(
-                   {modkey}, "j", function() awful.client.focus.byidx(1) end,
+                   {modkey}, "Right", function() awful.client.focus.byidx(1) end,
                      {description = "focus next by index", group = "client"}), awful.key(
-                   {modkey}, "k", function() awful.client.focus.byidx(-1) end,
+                   {modkey}, "Left", function() awful.client.focus.byidx(-1) end,
                      {description = "focus previous by index", group = "client"}), awful.key(
-                   {modkey, "Shift"}, "j", function() awful.client.swap.byidx(1) end,
+                   {modkey, "Shift"}, "Right", function() awful.client.swap.byidx(1) end,
                      {description = "swap with next client by index", group = "client"}), awful.key(
-                   {modkey, "Shift"}, "k", function() awful.client.swap.byidx(-1) end,
+                   {modkey, "Shift"}, "Left", function() awful.client.swap.byidx(-1) end,
                      {description = "swap with previous client by index", group = "client"}), awful.key(
                    {modkey, "Control"}, "j", function() awful.screen.focus_relative(1) end,
                      {description = "focus the next screen", group = "screen"}), awful.key(
