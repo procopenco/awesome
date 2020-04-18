@@ -1,6 +1,10 @@
 local gears = require("gears")
 local config = require("config")
 
-local function set_wallpaper(screen) gears.wallpaper.maximized(config.wallpaper, screen, true) end
+local wallpaper_utils = {}
 
-return set_wallpaper
+wallpaper_utils.set = function(screen)
+  gears.wallpaper.maximized(config.wallpaper, screen, true)
+end
+
+return wallpaper_utils
