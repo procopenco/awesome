@@ -6,6 +6,6 @@ local config = {}
 config.terminal = "terminator"
 config.modkey = "Mod4"
 
-config.screen_background = root .. "assets/background.jpg"
+config.wallpaper = root .. "assets/background.jpg"
 
 return config

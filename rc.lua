@@ -13,7 +13,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local naughty = require("naughty")
-local menubar = require("menubar")
 
 local tasklist_buttons = gears.table.join(
                            awful.button(
