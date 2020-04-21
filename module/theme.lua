@@ -8,7 +8,6 @@ local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local old_themes_path = "~/.config/awesome/themes/"
-local assets_dir = config.root_dir .. "module/theme/assets/"
 
 local theme = {}
 
@@ -93,8 +92,6 @@ theme.titlebar_maximized_button_normal_inactive = old_themes_path .. "my/titleba
 theme.titlebar_maximized_button_focus_inactive = old_themes_path .. "my/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_active = old_themes_path .. "my/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active = old_themes_path .. "my/titlebar/maximized_focus_active.png"
-
-theme.wallpaper = assets_dir .. "wallpaper.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = old_themes_path .. "my/layouts/fairhw.png"
