@@ -13,8 +13,8 @@ local theme = {}
 
 theme.font = "Roboto medium 8"
 
-theme.bg_normal = "#222222"
-theme.bg_focus = "#535d6c"
+theme.bg_normal = "#22222200"
+theme.bg_focus = "#535d6c77"
 theme.bg_urgent = "#ff0000"
 theme.bg_minimize = "#444444"
 theme.bg_systray = theme.bg_normal
@@ -110,6 +110,8 @@ theme.layout_cornernw = old_themes_path .. "my/layouts/cornernww.png"
 theme.layout_cornerne = old_themes_path .. "my/layouts/cornernew.png"
 theme.layout_cornersw = old_themes_path .. "my/layouts/cornersww.png"
 theme.layout_cornerse = old_themes_path .. "my/layouts/cornersew.png"
+
+theme.bg_systray = "#00000000"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
