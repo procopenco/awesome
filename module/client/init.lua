@@ -33,10 +33,13 @@ local clientkeys = gears.table.join(
       c.minimized = true
     end, {description = "minimize", group = "client"}
                      ), awful.key(
-                       {config.modkey}, "m", function(c)
-      c.maximized = not c.maximized
-      c:raise()
-    end, {description = "(un)maximize", group = "client"}
+                       {config.modkey}, "Up", function(c)
+      c.maximized = true
+    end, {description = "maximize", group = "client"}
+                     ), awful.key(
+                       {config.modkey}, "Down", function(c)
+      c.maximized = false
+    end, {description = "unmaximize", group = "client"}
                      )
                    )
 

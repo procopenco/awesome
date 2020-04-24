@@ -5,3 +5,5 @@ require("module.screen")
 require("module.client")
 require("module.theme")
 require("awful.autofocus")
+
+log.info("restarted")
