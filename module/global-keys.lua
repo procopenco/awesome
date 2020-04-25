@@ -76,7 +76,15 @@ local globalkeys = gears.table.join( --          awful.key(
       awful.util.spawn("amixer sset Master toggle")
     end
                      ), awful.key(
-                       {config.modkey, "Control"}, "n", function()
+                       {}, "XF86MonBrightnessDown", function()
+      awful.util.spawn("xbacklight -dec 15")
+    end
+                     ), awful.key(
+                       {}, "XF86MonBrightnessUp", function()
+      awful.util.spawn("xbacklight -inc 15")
+    end
+                     ), awful.key(
+                       {config.modkey, "Shift"}, "m", function()
       local c = awful.client.restore()
       -- Focus restored client
       if c then

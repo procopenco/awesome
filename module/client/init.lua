@@ -27,9 +27,7 @@ local clientkeys = gears.table.join(
       c.ontop = not c.ontop
     end, {description = "toggle keep on top", group = "client"}
                      ), awful.key(
-                       {config.modkey}, "n", function(c)
-      -- The client currently has the input focus, so it cannot be
-      -- minimized, since minimized clients can't have the focus.
+                       {config.modkey}, "m", function(c)
       c.minimized = true
     end, {description = "minimize", group = "client"}
                      ), awful.key(
