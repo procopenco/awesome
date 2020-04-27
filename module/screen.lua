@@ -21,8 +21,6 @@ local screen_setup = function(screen)
   wallpaper_utils.set(screen)
   awful.tag({"master"}, screen)
 
-  local text_widget = {text = "Hello world!", widget = wibox.widget.textbox}
-
   local tasklistLeft = awful.widget.tasklist {
     screen = screen,
     filter = awful.widget.tasklist.filter.currenttags,
@@ -33,7 +31,7 @@ local screen_setup = function(screen)
       widget = wibox.container.background,
       create_callback = function(self, c, index, objects)
         if c.class == "Slack" then
-          imagebox = self:get_children_by_id("icon_role")[1]
+          local imagebox = self:get_children_by_id("icon_role")[1]
           imagebox:set_image("/usr/share/icons/hicolor/scalable/apps/slack.svg")
         end
       end,
@@ -68,7 +66,7 @@ local screen_setup = function(screen)
           layout = wibox.layout.fixed.vertical,
           {widget = wibox.container.place, wibox.widget.textclock("%H %M")},
           {widget = wibox.container.place, wibox.widget.textclock("%b %d")},
-          {widget = wibox.container.place, wibox.widget.textclock("%A")},
+          {widget = wibox.container.place, wibox.widget.textclock("%a")},
         },
       },
     },

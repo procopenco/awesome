@@ -4,19 +4,20 @@ local config = require("config")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
 
-local globalkeys = gears.table.join( --          awful.key(
-  --            {modkey}, "Tab", function() end, function()
-  -- keygrabber.run(
-  --   function(mods, key, action)
-  --     log.info("hi2" .. key)
-  --     print("You did:", gears.debug.dump_return(mods), key, action)
-  --     keygrabber.stop()
-  --   end)
-  -- end),
+--          awful.key(
+--            {modkey}, "Tab", function() end, function()
+-- keygrabber.run(
+--   function(mods, key, action)
+--     log.info("hi2" .. key)
+--     print("You did:", gears.debug.dump_return(mods), key, action)
+--     keygrabber.stop()
+--   end)
+-- end),
+local globalkeys = gears.table.join(
                      awful.key(
                        {config.modkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}
                      ), awful.key(
-                       {config.modkey}, "Tab", function(a, b)
+                       {config.modkey}, "Tab", function()
       awful.client.focus.byidx(1)
     end, {description = "focus next by index", group = "client"}
                      ), awful.key(
@@ -51,10 +52,10 @@ local globalkeys = gears.table.join( --          awful.key(
       awful.spawn(config.terminal)
     end, {description = "open a terminal", group = "launcher"}
                      ), awful.key(
-                       {config.modkey, "Control"}, "r", awesome.restart,
+                       {config.modkey, "Control"}, "r", _G.awesome.restart,
                        {description = "reload awesome", group = "awesome"}
                      ), awful.key(
-                       {config.modkey, "Shift"}, "q", awesome.quit, {description = "quit awesome", group = "awesome"}
+                       {config.modkey, "Shift"}, "q", _G.awesome.quit, {description = "quit awesome", group = "awesome"}
                      ), awful.key(
                        {config.modkey}, "l", function()
       awful.spawn("i3lock-fancy")
