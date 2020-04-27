@@ -3,6 +3,9 @@ local awful = require("awful")
 local config = require("config")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
+local shortcut_utils = require("utils.shortcut")
+local add_key = shortcut_utils.add_key
+local keys = config.shortcuts.keys
 
 --          awful.key(
 --            {modkey}, "Tab", function() end, function()
@@ -13,105 +16,76 @@ local menubar = require("menubar")
 --     keygrabber.stop()
 --   end)
 -- end),
-local globalkeys = gears.table.join(
-                     awful.key(
-                       {config.modkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}
-                     ), awful.key(
-                       {config.modkey}, "Tab", function()
-      awful.client.focus.byidx(1)
-    end, {description = "focus next by index", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "Right", function()
-      awful.client.focus.byidx(1)
-    end, {description = "focus next by index", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "Left", function()
-      awful.client.focus.byidx(-1)
-    end, {description = "focus previous by index", group = "client"}
-                     ), awful.key(
-                       {config.modkey, "Shift"}, "Right", function()
-      awful.client.swap.byidx(1)
-    end, {description = "swap with next client by index", group = "client"}
-                     ), awful.key(
-                       {config.modkey, "Shift"}, "Left", function()
-      awful.client.swap.byidx(-1)
-    end, {description = "swap with previous client by index", group = "client"}
-                     ), awful.key(
-                       {config.modkey, "Control"}, "j", function()
-      awful.screen.focus_relative(1)
-    end, {description = "focus the next screen", group = "screen"}
-                     ), awful.key(
-                       {config.modkey, "Control"}, "k", function()
-      awful.screen.focus_relative(-1)
-    end, {description = "focus the previous screen", group = "screen"}
-                     ), awful.key(
-                       {config.modkey}, "u", awful.client.urgent.jumpto,
-                       {description = "jump to urgent client", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "Return", function()
-      awful.spawn(config.terminal)
-    end, {description = "open a terminal", group = "launcher"}
-                     ), awful.key(
-                       {config.modkey, "Control"}, "r", _G.awesome.restart,
-                       {description = "reload awesome", group = "awesome"}
-                     ), awful.key(
-                       {config.modkey, "Shift"}, "q", _G.awesome.quit, {description = "quit awesome", group = "awesome"}
-                     ), awful.key(
-                       {config.modkey}, "l", function()
-      awful.spawn("i3lock-fancy")
-    end, {description = "lock screen", group = "awesome"}
-                     ), awful.key(
-                       {"Control"}, "space", function()
-      awful.spawn("ibus emoji")
-    end, {description = "Emoji", group = "awesome"}
-                     ), awful.key(
-                       {}, "XF86AudioRaiseVolume", function()
-      awful.util.spawn("amixer set Master 5%+")
-    end
-                     ), awful.key(
-                       {}, "XF86AudioLowerVolume", function()
-      awful.util.spawn("amixer set Master 5%-")
-    end
-                     ), awful.key(
-                       {}, "XF86AudioMute", function()
-      awful.util.spawn("amixer sset Master toggle")
-    end
-                     ), awful.key(
-                       {}, "XF86MonBrightnessDown", function()
-      awful.util.spawn("xbacklight -dec 15")
-    end
-                     ), awful.key(
-                       {}, "XF86MonBrightnessUp", function()
-      awful.util.spawn("xbacklight -inc 15")
-    end
-                     ), awful.key(
-                       {config.modkey, "Shift"}, "m", function()
-      local c = awful.client.restore()
-      -- Focus restored client
-      if c then
-        c:emit_signal("request::activate", "key.unminimize", {raise = true})
-      end
-    end, {description = "restore minimized", group = "client"}
-                     ), -- Prompt
-  awful.key(
-                       {config.modkey}, "r", function()
-      awful.screen.focused().promptbox:run()
-    end, {description = "run prompt", group = "launcher"}
-                     ), awful.key(
-                       {config.modkey}, "x", function()
-      awful.prompt.run {
-        prompt = "Run Lua code: ",
-        textbox = awful.screen.focused().promptbox.widget,
-        exe_callback = awful.util.eval,
-        history_path = awful.util.get_cache_dir() .. "/history_eval",
-      }
-    end, {description = "lua execute prompt", group = "awesome"}
-                     ), -- Menubar
-  awful.key(
-                       {config.modkey}, "p", function()
-      menubar.show()
-    end, {description = "show the menubar", group = "launcher"}
-                     )
-                   )
 
+local next_client_handler = function()
+  awful.client.focus.byidx(1)
+end
+
+local prev_client_handler = function()
+  awful.client.focus.byidx(-1)
+end
+
+local swap_with_next_client_handler = function()
+  awful.client.swap.byidx(1)
+end
+
+local swap_with_prev_client_handler = function()
+  awful.client.swap.byidx(-1)
+end
+
+local lock_screen_handler = function()
+  awful.spawn("i3lock-fancy")
+end
+
+local emoji_handler = function()
+  awful.spawn("ibus emoji")
+end
+
+local increase_volume_handler = function()
+  awful.util.spawn("amixer set Master 5%+")
+end
+
+local decrease_volume_handler = function()
+  awful.util.spawn("amixer set Master 5%-")
+end
+
+local toggle_volume_handler = function()
+  awful.util.spawn("amixer sset Master toggle")
+end
+
+local increase_brightness_handler = function()
+  awful.util.spawn("xbacklight -inc 15")
+end
+
+local decrease_brightness_handler = function()
+  awful.util.spawn("xbacklight -dec 15")
+end
+
+local restore_last_minimized_client_handler = function()
+  local c = awful.client.restore()
+  -- Focus restored client
+  if c then
+    c:emit_signal("request::activate", "key.unminimize", {raise = true})
+  end
+end
+
+local launch_terminal_handler = function()
+  awful.spawn(config.terminal)
+end
+
+local globalkeys = gears.table.join(
+                     add_key(keys.help, hotkeys_popup.show_help), add_key(keys.next_client, next_client_handler),
+                     add_key(keys.next_client_2, next_client_handler), add_key(keys.prev_client, prev_client_handler),
+                     add_key(keys.swap_with_next_client, swap_with_next_client_handler),
+                     add_key(keys.swap_with_prev_client, swap_with_prev_client_handler),
+                     add_key(keys.launch_terminal, launch_terminal_handler), add_key(keys.reload, _G.awesome.restart),
+                     add_key(keys.quit, _G.awesome.quit), add_key(keys.lock, lock_screen_handler),
+                     add_key(keys.emoji, emoji_handler), add_key(keys.increase_volume, increase_volume_handler),
+                     add_key(keys.decrease_volume, decrease_volume_handler),
+                     add_key(keys.toggle_volume, toggle_volume_handler),
+                     add_key(keys.increase_brightness, increase_brightness_handler),
+                     add_key(keys.decrease_brightness, decrease_brightness_handler),
+                     add_key(keys.restore_minimized, restore_last_minimized_client_handler),
+                     add_key(keys.launch_menu, menubar.show)
+                   )
 _G.root.keys(globalkeys)

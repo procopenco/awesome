@@ -2,8 +2,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local wallpaper_utils = require("utils.wallpaper")
-local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
 
 local taskbar_click = function(c)
   if c ~= _G.client.focus then
