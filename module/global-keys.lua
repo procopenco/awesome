@@ -5,7 +5,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local menubar = require("menubar")
 local shortcut_utils = require("utils.shortcut")
 local add_key = shortcut_utils.add_key
-local keys = config.shortcuts.keys
+local global = config.shortcuts.global
 
 local function swap_with_next_client_handler()
   awful.client.swap.byidx(1)
@@ -75,14 +75,16 @@ end
 
 _G.root.keys(
   gears.table.join(
-    add_key(keys.help, hotkeys_popup.show_help), add_key(keys.smart_client_navigation, smart_client_navigation_handler),
-    add_key(keys.swap_with_next_client, swap_with_next_client_handler),
-    add_key(keys.swap_with_prev_client, swap_with_prev_client_handler),
-    add_key(keys.launch_terminal, launch_terminal_handler), add_key(keys.reload, _G.awesome.restart),
-    add_key(keys.quit, _G.awesome.quit), add_key(keys.lock, lock_screen_handler), add_key(keys.emoji, emoji_handler),
-    add_key(keys.increase_volume, increase_volume_handler), add_key(keys.decrease_volume, decrease_volume_handler),
-    add_key(keys.toggle_volume, toggle_volume_handler), add_key(keys.increase_brightness, increase_brightness_handler),
-    add_key(keys.decrease_brightness, decrease_brightness_handler),
-    add_key(keys.restore_minimized, restore_last_minimized_client_handler), add_key(keys.launch_menu, menubar.show)
+    add_key(global.help, hotkeys_popup.show_help),
+    add_key(global.smart_client_navigation, smart_client_navigation_handler),
+    add_key(global.swap_with_next_client, swap_with_next_client_handler),
+    add_key(global.swap_with_prev_client, swap_with_prev_client_handler),
+    add_key(global.launch_terminal, launch_terminal_handler), add_key(global.reload, _G.awesome.restart),
+    add_key(global.quit, _G.awesome.quit), add_key(global.lock, lock_screen_handler),
+    add_key(global.emoji, emoji_handler), add_key(global.increase_volume, increase_volume_handler),
+    add_key(global.decrease_volume, decrease_volume_handler), add_key(global.toggle_volume, toggle_volume_handler),
+    add_key(global.increase_brightness, increase_brightness_handler),
+    add_key(global.decrease_brightness, decrease_brightness_handler),
+    add_key(global.restore_minimized, restore_last_minimized_client_handler), add_key(global.launch_menu, menubar.show)
   )
 )
