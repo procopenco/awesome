@@ -7,16 +7,6 @@ local shortcut_utils = require("utils.shortcut")
 local add_key = shortcut_utils.add_key
 local keys = config.shortcuts.keys
 
---          awful.key(
---            {modkey}, "Tab", function() end, function()
--- keygrabber.run(
---   function(mods, key, action)
---     log.info("hi2" .. key)
---     print("You did:", gears.debug.dump_return(mods), key, action)
---     keygrabber.stop()
---   end)
--- end),
-
 local next_client_handler = function()
   awful.client.focus.byidx(1)
 end
@@ -73,8 +63,26 @@ local launch_terminal_handler = function()
   awful.spawn(config.terminal)
 end
 
+local smart_next_client_handler = function()
+  _G.client.focus.smart_history.freeze()
+  _G.client.focus.smart_history.focus_prev()
+
+  _G.keygrabber.run(
+    function(mods, key, action)
+      if action == "press" and key == "Tab" then
+        _G.client.focus.smart_history.focus_prev()
+      end
+
+      if action == "release" and key == "Super_L" then
+        _G.client.focus.smart_history.unfreeze()
+        _G.keygrabber.stop()
+      end
+    end
+  )
+end
+
 local globalkeys = gears.table.join(
-                     add_key(keys.help, hotkeys_popup.show_help), add_key(keys.next_client, next_client_handler),
+                     add_key(keys.help, hotkeys_popup.show_help), add_key(keys.next_client, smart_next_client_handler),
                      add_key(keys.next_client_2, next_client_handler), add_key(keys.prev_client, prev_client_handler),
                      add_key(keys.swap_with_next_client, swap_with_next_client_handler),
                      add_key(keys.swap_with_prev_client, swap_with_prev_client_handler),
