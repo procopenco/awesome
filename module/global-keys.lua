@@ -7,51 +7,51 @@ local shortcut_utils = require("utils.shortcut")
 local add_key = shortcut_utils.add_key
 local keys = config.shortcuts.keys
 
-local next_client_handler = function()
+local function next_client_handler()
   awful.client.focus.byidx(1)
 end
 
-local prev_client_handler = function()
+local function prev_client_handler()
   awful.client.focus.byidx(-1)
 end
 
-local swap_with_next_client_handler = function()
+local function swap_with_next_client_handler()
   awful.client.swap.byidx(1)
 end
 
-local swap_with_prev_client_handler = function()
+local function swap_with_prev_client_handler()
   awful.client.swap.byidx(-1)
 end
 
-local lock_screen_handler = function()
+local function lock_screen_handler()
   awful.spawn("i3lock-fancy")
 end
 
-local emoji_handler = function()
+local function emoji_handler()
   awful.spawn("ibus emoji")
 end
 
-local increase_volume_handler = function()
+local function increase_volume_handler()
   awful.util.spawn("amixer set Master 5%+")
 end
 
-local decrease_volume_handler = function()
+local function decrease_volume_handler()
   awful.util.spawn("amixer set Master 5%-")
 end
 
-local toggle_volume_handler = function()
+local function toggle_volume_handler()
   awful.util.spawn("amixer sset Master toggle")
 end
 
-local increase_brightness_handler = function()
+local function increase_brightness_handler()
   awful.util.spawn("xbacklight -inc 15")
 end
 
-local decrease_brightness_handler = function()
+local function decrease_brightness_handler()
   awful.util.spawn("xbacklight -dec 15")
 end
 
-local restore_last_minimized_client_handler = function()
+local function restore_last_minimized_client_handler()
   local c = awful.client.restore()
   -- Focus restored client
   if c then
