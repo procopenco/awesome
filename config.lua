@@ -74,22 +74,10 @@ config.shortcuts.keys.decrease_brightness = {
   group = config.shortcuts.groups.general,
 }
 
-config.shortcuts.keys.next_client = {
+config.shortcuts.keys.smart_client_navigation = {
   mod = {config.modkey},
   key = "Tab",
-  description = "focus next client",
-  group = config.shortcuts.groups.client,
-}
-config.shortcuts.keys.next_client_2 = {
-  mod = {config.modkey},
-  key = "Right",
-  description = "focus next client",
-  group = config.shortcuts.groups.client,
-}
-config.shortcuts.keys.prev_client = {
-  mod = {config.modkey},
-  key = "Left",
-  description = "focus previous client",
+  description = "smart client navigation",
   group = config.shortcuts.groups.client,
 }
 config.shortcuts.keys.swap_with_next_client = {
