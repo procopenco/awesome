@@ -4,42 +4,42 @@ local awful = require("awful")
 local wibox = require("wibox")
 local config = require("config")
 local beautiful = require("beautiful")
+local shortcut_utils = require("utils.shortcut")
+local add_key = shortcut_utils.add_key
+local client_shortcuts = config.shortcuts.client
+
+local function toggle_fullscreen_handler(client)
+  client.fullscreen = not client.fullscreen
+  client:raise()
+end
+
+local function close_client_handler(client)
+  client:kill()
+end
+
+local function keep_on_top_handler(client)
+  client.ontop = not client.ontop
+end
+
+local function minimize_handler(client)
+  client.minimized = true
+end
+
+local function maximize_handler(client)
+  client.maximized = true
+end
+
+local function unmaximize_handler(client)
+  client.maximized = false
+end
 
 local clientkeys = gears.table.join(
-                     awful.key(
-                       {config.modkey}, "f", function(c)
-      c.fullscreen = not c.fullscreen
-      c:raise()
-    end, {description = "toggle fullscreen", group = "client"}
-                     ), awful.key(
-                       {config.modkey, "Shift"}, "c", function(c)
-      c:kill()
-    end, {description = "close", group = "client"}
-                     ), awful.key(
-                       {config.modkey, "Control"}, "Return", function(c)
-      c:swap(awful.client.getmaster())
-    end, {description = "move to master", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "o", function(c)
-      c:move_to_screen()
-    end, {description = "move to screen", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "t", function(c)
-      c.ontop = not c.ontop
-    end, {description = "toggle keep on top", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "m", function(c)
-      c.minimized = true
-    end, {description = "minimize", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "Up", function(c)
-      c.maximized = true
-    end, {description = "maximize", group = "client"}
-                     ), awful.key(
-                       {config.modkey}, "Down", function(c)
-      c.maximized = false
-    end, {description = "unmaximize", group = "client"}
-                     )
+                     add_key(client_shortcuts.fullscreen, toggle_fullscreen_handler),
+                     add_key(client_shortcuts.close, close_client_handler),
+                     add_key(client_shortcuts.ontop, keep_on_top_handler),
+                     add_key(client_shortcuts.minimize, minimize_handler),
+                     add_key(client_shortcuts.maximize, maximize_handler),
+                     add_key(client_shortcuts.unmaximize, unmaximize_handler)
                    )
 
 local clientbuttons = gears.table.join(
