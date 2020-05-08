@@ -8,6 +8,7 @@ return function(config)
     ontop = {mod = {modkey}, key = "t", description = "toggle keep on top", group = groups.client},
     minimize = {mod = {modkey}, key = "m", description = "minimize", group = groups.client},
     maximize = {mod = {modkey}, key = "Up", description = "maximize", group = groups.client},
-    unmaximize = {mod = {modkey}, key = "Down", description = "unmaximize", group = groups.client},
+    move_to_left = {mod = {modkey}, key = "Left", description = "Place client to the left", group = groups.client},
+    move_to_right = {mod = {modkey}, key = "Right", description = "Place client to the right", group = groups.client},
   }
 end

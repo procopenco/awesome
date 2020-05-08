@@ -26,11 +26,33 @@ local function minimize_handler(client)
 end
 
 local function maximize_handler(client)
-  client.maximized = true
+  local screen_size = client.screen.workarea
+  local relative_x = screen_size.x - client.x
+  local relative_y = screen_size.y - client.y
+  local relative_width = screen_size.width - client.width
+  local relative_height = screen_size.height - client.height
+
+  client:relative_move(relative_x, relative_y, relative_width, relative_height)
 end
 
-local function unmaximize_handler(client)
-  client.maximized = false
+local function move_to_left_handler(client)
+  local screen_size = client.screen.workarea
+  local relative_x = screen_size.x - client.x
+  local relative_y = screen_size.y - client.y
+  local relative_width = screen_size.width / 2 - client.width
+  local relative_height = screen_size.height - client.height
+
+  client:relative_move(relative_x, relative_y, relative_width, relative_height)
+end
+
+local function move_to_right_handler(client)
+  local screen_size = client.screen.workarea
+  local relative_x = screen_size.width / 2 + screen_size.x - client.x
+  local relative_y = screen_size.y - client.y
+  local relative_width = screen_size.width / 2 - client.width
+  local relative_height = screen_size.height - client.height
+
+  client:relative_move(relative_x, relative_y, relative_width, relative_height)
 end
 
 local clientkeys = gears.table.join(
@@ -39,7 +61,8 @@ local clientkeys = gears.table.join(
                      add_key(client_shortcuts.ontop, keep_on_top_handler),
                      add_key(client_shortcuts.minimize, minimize_handler),
                      add_key(client_shortcuts.maximize, maximize_handler),
-                     add_key(client_shortcuts.unmaximize, unmaximize_handler)
+                     add_key(client_shortcuts.move_to_left, move_to_left_handler),
+                     add_key(client_shortcuts.move_to_right, move_to_right_handler)
                    )
 
 local clientbuttons = gears.table.join(
@@ -69,6 +92,7 @@ awful.rules.rules = {
       buttons = clientbuttons,
       screen = awful.screen.preferred,
       placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+      maximized = false,
     },
   }, -- Floating clients.
   {rule_any = {type = {"normal", "dialog"}}, properties = {titlebars_enabled = true}},
@@ -76,9 +100,7 @@ awful.rules.rules = {
 
 _G.client.connect_signal(
   "manage", function(c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+    maximize_handler(c)
 
     if _G.awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
       -- Prevent clients from being unreachable after screen count changes.
